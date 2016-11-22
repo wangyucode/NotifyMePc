@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.wycode.notifyme.pc.Controller">
+    <columnConstraints>
+        <ColumnConstraints maxWidth="486.0" minWidth="281.0" prefWidth="470.0" />
+        <ColumnConstraints maxWidth="303.0" minWidth="5.0" prefWidth="95.0" />
+        <ColumnConstraints maxWidth="286.0" minWidth="53.0" prefWidth="89.0" />
+        <ColumnConstraints maxWidth="283.0" minWidth="87.0" prefWidth="87.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <TextField fx:id="tf_queryId" prefHeight="23.0" prefWidth="272.0" promptText="请输入查询码" />
+        <Button mnemonicParsing="false" onAction="#handleRefreshPressed" prefHeight="23.0" prefWidth="96.0" text="立即刷新" GridPane.columnIndex="1" />
+        <CheckBox mnemonicParsing="false" text="自动刷新" GridPane.columnIndex="2" />
+        <ChoiceBox prefHeight="23.0" prefWidth="304.0" GridPane.columnIndex="3" />
+        <TableView prefHeight="480.0" prefWidth="771.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+            <columns>
+                <TableColumn prefWidth="75.0" text="应用名称" />
+                <TableColumn prefWidth="127.0" text="通知标题" />
+                <TableColumn prefWidth="371.0" text="通知内容" />
+                <TableColumn prefWidth="148.0" text="通知时间" />
+            </columns>
+        </TableView>
+        <Hyperlink prefHeight="21.0" prefWidth="73.0" text="wycode.cn" textFill="#0008f2" GridPane.rowIndex="3">
+        </Hyperlink>
+        <Label text="通蜜 PC端1.0" GridPane.rowIndex="2" />
+        <ProgressIndicator fx:id="progress" prefHeight="20.0" prefWidth="95.0" GridPane.columnIndex="1" visible="false" />
+    </children>
+</GridPane>
