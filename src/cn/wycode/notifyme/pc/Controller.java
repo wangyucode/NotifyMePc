@@ -1,11 +1,22 @@
 package cn.wycode.notifyme.pc;
 
+import cn.wycode.notifyme.pc.bean.Notification;
+import cn.wycode.notifyme.pc.bean.Page;
+import cn.wycode.notifyme.pc.bean.WyResult;
+import com.alibaba.fastjson.JSONAware;
+import com.sun.javafx.collections.ObservableListWrapper;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableStringValue;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+
+import java.util.concurrent.ExecutorService;
 
 public class Controller {
 
@@ -13,6 +24,22 @@ public class Controller {
     TextField tf_queryId;
     @FXML
     ProgressIndicator progress;
+    @FXML
+    Button btn_refresh;
+    @FXML
+    TableView<Notification> table;
+    @FXML
+    TableColumn<Notification,String> column_id;
+    @FXML
+    TableColumn<Notification,String> column_name;
+    @FXML
+    TableColumn<Notification,String> column_title;
+    @FXML
+    TableColumn<Notification,String> column_text;
+    @FXML
+    TableColumn<Notification,String> column_time;
+
+    private static final String url = "http://wycode.cn/api/notification/get?queryId=";
 
     @FXML
     protected void handleRefreshPressed(ActionEvent event) {
@@ -29,9 +56,56 @@ public class Controller {
         }
         System.out.println("handleRefreshPressed = " + tf_queryId.getText());
         progress.setVisible(true);
-        Button refresh = (Button) event.getSource();
-        refresh.setDisable(true);
+        btn_refresh.setDisable(true);
+        new HttpTask(tf_queryId.getText()).run();
+    }
 
+
+    class HttpTask extends Task<WyResult<Page>> {
+
+        private String queryId;
+
+        HttpTask(String queryId) {
+            this.queryId = queryId;
+        }
+
+        @Override
+        protected WyResult<Page> call() throws Exception {
+            String resultString = HttpUtil.Get(url + queryId).toString();
+            WyResult<Page> resultBean;
+            resultBean = JsonUtil.toJavaBean(resultString, Page.class);
+            return resultBean;
+        }
+
+
+
+        @Override
+        protected void succeeded() {
+            super.succeeded();
+            WyResult<Page> resultBean = getValue();
+            if(resultBean.code!=1){
+                Alert alert = new Alert(Alert.AlertType.WARNING, resultBean.message);
+                alert.show();
+            }else{
+                ObservableList<Notification> notifications = new ObservableListWrapper<>(resultBean.data.content);
+                table.setItems(notifications);
+                column_id.setCellValueFactory(new PropertyValueFactory("id"));
+                column_name.setCellValueFactory(new PropertyValueFactory<>("appName"));
+                column_title.setCellValueFactory(new PropertyValueFactory<>("title"));
+                column_text.setCellValueFactory(new PropertyValueFactory<>("text"));
+                column_time.setCellValueFactory(new PropertyValueFactory<>("when"));
+                table.getColumns().setAll(column_id,column_name,column_title,column_text,column_time);
+            }
+            progress.setVisible(false);
+            btn_refresh.setDisable(false);
+        }
+
+        @Override
+        protected void failed() {
+            super.failed();
+            progress.setVisible(false);
+            btn_refresh.setDisable(false);
+        }
     }
 
 }
