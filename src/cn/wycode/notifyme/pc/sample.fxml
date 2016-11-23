@@ -28,15 +28,16 @@
     </rowConstraints>
     <children>
         <TextField fx:id="tf_queryId" prefHeight="23.0" prefWidth="272.0" promptText="请输入查询码" />
-        <Button mnemonicParsing="false" onAction="#handleRefreshPressed" prefHeight="23.0" prefWidth="96.0" text="立即刷新" GridPane.columnIndex="1" />
+        <Button fx:id="btn_refresh" mnemonicParsing="false" onAction="#handleRefreshPressed" prefHeight="23.0" prefWidth="96.0" text="立即刷新" GridPane.columnIndex="1" />
         <CheckBox mnemonicParsing="false" text="自动刷新" GridPane.columnIndex="2" />
         <ChoiceBox prefHeight="23.0" prefWidth="304.0" GridPane.columnIndex="3" />
-        <TableView prefHeight="480.0" prefWidth="771.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+        <TableView fx:id="table" prefHeight="480.0" prefWidth="771.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
             <columns>
-                <TableColumn prefWidth="75.0" text="应用名称" />
-                <TableColumn prefWidth="127.0" text="通知标题" />
-                <TableColumn prefWidth="371.0" text="通知内容" />
-                <TableColumn prefWidth="148.0" text="通知时间" />
+                <TableColumn fx:id="column_id" prefWidth="30.0" text="id" />
+                <TableColumn fx:id="column_name" prefWidth="75.0" text="应用名称" />
+                <TableColumn fx:id="column_title" prefWidth="127.0" text="通知标题" />
+                <TableColumn fx:id="column_text" prefWidth="371.0" text="通知内容" />
+                <TableColumn fx:id="column_time" prefWidth="148.0" text="通知时间" />
             </columns>
         </TableView>
         <Hyperlink prefHeight="21.0" prefWidth="73.0" text="wycode.cn" textFill="#0008f2" GridPane.rowIndex="3">
