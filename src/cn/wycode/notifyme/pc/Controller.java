@@ -39,7 +39,7 @@ public class Controller {
     @FXML
     TableColumn<Notification,String> column_time;
 
-    private static final String url = "http://wycode.cn/api/notification/get?queryId=";
+    private static final String url = "http://wycode.cn/api/notification/get?size=20&queryId=";
 
     @FXML
     protected void handleRefreshPressed(ActionEvent event) {
@@ -89,7 +89,7 @@ public class Controller {
             }else{
                 ObservableList<Notification> notifications = new ObservableListWrapper<>(resultBean.data.content);
                 table.setItems(notifications);
-                column_id.setCellValueFactory(new PropertyValueFactory("id"));
+                column_id.setCellValueFactory(new PropertyValueFactory<>("id"));
                 column_name.setCellValueFactory(new PropertyValueFactory<>("appName"));
                 column_title.setCellValueFactory(new PropertyValueFactory<>("title"));
                 column_text.setCellValueFactory(new PropertyValueFactory<>("text"));
