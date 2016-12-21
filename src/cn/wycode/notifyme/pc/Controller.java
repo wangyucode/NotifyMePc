@@ -63,13 +63,10 @@ public class Controller {
 
     @FXML
     protected void handleWycodeClicked(MouseEvent event){
-        URI url = null;
         try {
-            url = new URI("http://wycode.cn");
+            URI url = new URI("http://wycode.cn");
             Desktop.getDesktop().browse(url);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
 
