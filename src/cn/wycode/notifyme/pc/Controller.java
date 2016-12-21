@@ -3,20 +3,21 @@ package cn.wycode.notifyme.pc;
 import cn.wycode.notifyme.pc.bean.Notification;
 import cn.wycode.notifyme.pc.bean.Page;
 import cn.wycode.notifyme.pc.bean.WyResult;
-import com.alibaba.fastjson.JSONAware;
 import com.sun.javafx.collections.ObservableListWrapper;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableStringValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+import javafx.scene.input.MouseEvent;
 
-import java.util.concurrent.ExecutorService;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class Controller {
 
@@ -29,15 +30,15 @@ public class Controller {
     @FXML
     TableView<Notification> table;
     @FXML
-    TableColumn<Notification,String> column_id;
+    TableColumn<Notification, String> column_id;
     @FXML
-    TableColumn<Notification,String> column_name;
+    TableColumn<Notification, String> column_name;
     @FXML
-    TableColumn<Notification,String> column_title;
+    TableColumn<Notification, String> column_title;
     @FXML
-    TableColumn<Notification,String> column_text;
+    TableColumn<Notification, String> column_text;
     @FXML
-    TableColumn<Notification,String> column_time;
+    TableColumn<Notification, String> column_time;
 
     private static final String url = "http://wycode.cn/api/notification/get?size=20&queryId=";
 
@@ -60,6 +61,20 @@ public class Controller {
         new HttpTask(tf_queryId.getText()).run();
     }
 
+    @FXML
+    protected void handleWycodeClicked(MouseEvent event){
+        URI url = null;
+        try {
+            url = new URI("http://wycode.cn");
+            Desktop.getDesktop().browse(url);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     class HttpTask extends Task<WyResult<Page>> {
 
@@ -78,15 +93,14 @@ public class Controller {
         }
 
 
-
         @Override
         protected void succeeded() {
             super.succeeded();
             WyResult<Page> resultBean = getValue();
-            if(resultBean.code!=1){
+            if (resultBean.code != 1) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, resultBean.message);
                 alert.show();
-            }else{
+            } else {
                 ObservableList<Notification> notifications = new ObservableListWrapper<>(resultBean.data.content);
                 table.setItems(notifications);
                 column_id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -94,7 +108,7 @@ public class Controller {
                 column_title.setCellValueFactory(new PropertyValueFactory<>("title"));
                 column_text.setCellValueFactory(new PropertyValueFactory<>("text"));
                 column_time.setCellValueFactory(new PropertyValueFactory<>("when"));
-                table.getColumns().setAll(column_id,column_name,column_title,column_text,column_time);
+                table.getColumns().setAll(column_id, column_name, column_title, column_text, column_time);
             }
             progress.setVisible(false);
             btn_refresh.setDisable(false);

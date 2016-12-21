@@ -40,7 +40,7 @@
                 <TableColumn fx:id="column_time" prefWidth="148.0" text="通知时间" />
             </columns>
         </TableView>
-        <Hyperlink prefHeight="21.0" prefWidth="73.0" text="wycode.cn" textFill="#0008f2" GridPane.rowIndex="3">
+        <Hyperlink prefHeight="21.0" prefWidth="73.0" text="wycode.cn" textFill="#0008f2" GridPane.rowIndex="3" onMouseClicked="#handleWycodeClicked">
         </Hyperlink>
         <Label text="通蜜 PC端1.0" GridPane.rowIndex="2" />
         <ProgressIndicator fx:id="progress" prefHeight="20.0" prefWidth="95.0" GridPane.columnIndex="1" visible="false" />

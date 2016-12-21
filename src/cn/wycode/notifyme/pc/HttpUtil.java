@@ -1,16 +1,10 @@
 package cn.wycode.notifyme.pc;
 
-import sun.misc.IOUtils;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Base64;
 
 /**
  * Created by wWX383516 on 2016/10/31.
@@ -21,14 +15,15 @@ public class HttpUtil {
         try {
             URL url = new URL(urlString);
 
-            InetSocketAddress addr = new InetSocketAddress("172.19.6.47", 8080);
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, addr);
-            URLConnection conn = url.openConnection(proxy);
+//            InetSocketAddress addr = new InetSocketAddress("172.19.6.47", 8080);
+//            Proxy proxy = new Proxy(Proxy.Type.HTTP, addr);
+//            URLConnection conn = url.openConnection(proxy);
+            URLConnection conn = url.openConnection();
 
 
-            String headerKey = "Proxy-Authorization";
-            String headerValue = "Basic ejAwMTkxNDg3OlRpZ2VyMiFKSkVISkpFSA==";
-            conn.setRequestProperty(headerKey, headerValue);
+//            String headerKey = "Proxy-Authorization";
+//            String headerValue = "Basic ejAwMTkxNDg3OlRpZ2VyMiFKSkVISkpFSA==";
+//            conn.setRequestProperty(headerKey, headerValue);
 
             InputStream in = conn.getInputStream();
             StringBuilder response = new StringBuilder();
