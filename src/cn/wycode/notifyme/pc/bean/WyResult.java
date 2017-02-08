@@ -8,4 +8,9 @@ public class WyResult<T> {
     public int code;
     public String message;
     public T data;
+    
+    public WyResult(String message){
+        this.code = 0;
+        this.message = message;
+    }
 }
