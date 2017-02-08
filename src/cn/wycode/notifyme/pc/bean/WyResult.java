@@ -9,6 +9,10 @@ public class WyResult<T> {
     public String message;
     public T data;
     
+    public WyResult(){
+        //default for json
+    }
+    
     public WyResult(String message){
         this.code = 0;
         this.message = message;
