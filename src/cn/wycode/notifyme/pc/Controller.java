@@ -85,7 +85,11 @@ public class Controller {
         protected WyResult<Page> call() throws Exception {
             String resultString = HttpUtil.Get(url + queryId).toString();
             WyResult<Page> resultBean;
-            resultBean = JsonUtil.toJavaBean(resultString, Page.class);
+            if (resultString.startsWith("{")) {
+                resultBean = JsonUtil.toJavaBean(resultString, Page.class);
+            } else {
+                resultBean = new WyResult<>(resultString);
+            }
             return resultBean;
         }
 
